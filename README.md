@@ -24,3 +24,6 @@ V1.0
 #Run
 1. Open the 'chat-app' directory run cli, type 'php artisan serve' and hit enter.
 2. Open the directory named 'react' that is located inside 'chat-app' directory, run cli, type 'npm run dev' and hit enter.
+
+#Notes
+1. The project UI is implemented using MaterialUI Library @ https://mui.com
