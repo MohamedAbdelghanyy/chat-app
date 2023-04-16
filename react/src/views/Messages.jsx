@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import axiosClient from "../clients/axios-client";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider.jsx";
 import pusherClient from "../clients/pusher-client";
 import {
@@ -16,7 +16,7 @@ import {
     Typography,
     colors,
 } from "@mui/material";
-import SendIcon from '@mui/icons-material/Send';
+import SendIcon from "@mui/icons-material/Send";
 import { blue } from "@mui/material/colors";
 
 export default function Messages() {
@@ -36,11 +36,15 @@ export default function Messages() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!id) {
-            iniNotificationsClient();
-        }
-        if (id && (!receiver.id || receiver.id != id)) {
-            getReceiver();
+        if (id && isNaN(id)) {
+            navigate("/messages");
+        } else {
+            if (id && (!receiver.id || receiver.id != id)) {
+                getReceiver();
+            }
+            if (!id && notificationsClient == null) {
+                iniNotificationsClient();
+            }
         }
     });
 
@@ -101,9 +105,11 @@ export default function Messages() {
             //console.log("UNSUBSCRIBED FROM NOTIFICATIONS");
         }
         //console.log("SUBSCRIBING TO NOTIFICATIONS");
+        const receiver_id = id ? id : 1;
         setNotificationsClient(
-            pusherClient(user.id, id, showNotification, true)
+            pusherClient(user.id, receiver_id, showNotification, true)
         );
+        debugger;
     };
 
     const iniMessagesClient = () => {
