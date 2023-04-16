@@ -16,6 +16,7 @@ import {
     Typography,
     colors,
 } from "@mui/material";
+import SendIcon from '@mui/icons-material/Send';
 import { blue } from "@mui/material/colors";
 
 export default function Messages() {
@@ -133,8 +134,6 @@ export default function Messages() {
         return {
             sx: {
                 bgcolor: blue[500],
-                width: 35,
-                height: 35,
                 p: 3,
             },
             children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
@@ -157,7 +156,13 @@ export default function Messages() {
                         background: `${colors.blue[500]}`,
                     },
                 }}
-                message={notification ? notification.message.sender_name + ': ' + notification.message.data : ""}
+                message={
+                    notification
+                        ? notification.message.sender_name +
+                          ": " +
+                          notification.message.data
+                        : ""
+                }
             />
             {!id && (
                 <Typography textAlign={"center"}>
@@ -224,16 +229,20 @@ export default function Messages() {
                             id="message"
                             placeholder="Type anything..."
                             name="message"
+                            InputProps={{
+                                endAdornment: (
+                                    <Button
+                                        type="submit"
+                                        sx={{ ml: 2 }}
+                                        variant="contained"
+                                        endIcon={<SendIcon />}
+                                    >
+                                        Send
+                                    </Button>
+                                ),
+                            }}
                             autoFocus
                         />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                        >
-                            Send
-                        </Button>
                     </Box>
                 </List>
             )}
