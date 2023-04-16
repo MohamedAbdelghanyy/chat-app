@@ -102,22 +102,17 @@ export default function Messages() {
     const iniNotificationsClient = () => {
         if (notificationsClient != null) {
             notificationsClient.disconnect();
-            //console.log("UNSUBSCRIBED FROM NOTIFICATIONS");
         }
-        //console.log("SUBSCRIBING TO NOTIFICATIONS");
         const receiver_id = id ? id : 1;
         setNotificationsClient(
             pusherClient(user.id, receiver_id, showNotification, true)
         );
-        debugger;
     };
 
     const iniMessagesClient = () => {
         if (messagesClient != null) {
             messagesClient.disconnect();
-            //console.log("UNSUBSCRIBED FROM MESSAGES");
         }
-        //console.log("SUBSCRIBING TO MESSAGES");
         setMessagesClient(pusherClient(user.id, id, setMessages, false));
     };
 

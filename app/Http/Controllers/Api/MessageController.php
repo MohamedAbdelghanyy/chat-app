@@ -92,7 +92,6 @@ class MessageController extends Controller
             ->where($sentConditions)
             ->orWhere($receivedConditions)
             ->get();
-        //return response('AAAAA', 200);
         return response($messages, 200);
     }
 

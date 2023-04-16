@@ -37,9 +37,6 @@ export default function DefaultLayout(props) {
     });
 
     useEffect(() => {
-        /*axiosClient.get("/user").then(({ data }) => {
-            setUser(data);
-        });*/
         axiosClient.get("/users").then(({ data }) => {
             setUsers(data);
         });
