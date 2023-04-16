@@ -38,6 +38,23 @@
 1. Open the `chat-app` directory run cli, type `php artisan serve` and hit enter.
 2. Open the directory named `react` that is located inside `chat-app` directory, run cli, type `npm run dev` and hit enter.
 
+## Deployment
+
+### React
+1. Open the directory named `react` that is located inside `chat-app` directory.
+2. Make a copy of `.env` file and renameit to `.env.production`
+3. Change the `VITE_API_BASE_URL` to your live api URL.
+4. Open cli and type `npm run build`.
+5. Upload the components of `react/dist` folder to your hosting's `public_html` folder.
+6. Upload the `.htaccess` file located in the `react` directory to your hosting's `public_html` folder.
+
+### Laravel
+1. Open the `.env` file located inside your `chat-app` directory, set `APP_ENV` to `prod` , `APP_DEBUG` to `false` and `APP_URL` to your domain.
+2. Upload your `chat-app` directory components to your hosting `one level above the public_html folder`.
+3. Move all the `public` directory components to the `public_html` directory.
+4. Open the `.env` file located inside your laravel directory and update your mysql information.
+5. Connect to your hosting account via SSH, navigate to your laravel directory, type `php artisan migrate` and hit enter.
+
 ## Notes
 1. The project is developed using [ReactJS](https://react.dev) and [Laravel](https://laravel.com).
 1. The UI is implemented using [MaterialUI](https://mui.com) Library.
