@@ -33,6 +33,7 @@
 ### Multi-Tenancy Configuration
 1. Open the `config/tenancy.php` file.
 2. Search for `central_domains` array and set your main domain to it.
+- `FOR DEVELOPMENT ONLY` you can create a tenant by opening `[API_BASE_URL]/api/create-tenant/EXAMPLE-TENANT` in your browser, make sure to remove it from the `chat-app/routes/api.php` file in production.
 
 ### Run
 1. Open the `chat-app` directory run cli, type `php artisan serve` and hit enter.
