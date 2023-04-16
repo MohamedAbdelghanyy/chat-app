@@ -1,6 +1,6 @@
 # Chat App
 
-- `V1.1`
+- `V1.2`
 
 ## Development
 

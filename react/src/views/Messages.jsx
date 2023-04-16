@@ -7,33 +7,43 @@ import {
     Avatar,
     Box,
     Button,
-    Grid,
     List,
     ListItem,
     ListItemAvatar,
     ListItemText,
+    Snackbar,
     TextField,
     Typography,
+    colors,
 } from "@mui/material";
 import { blue } from "@mui/material/colors";
 
 export default function Messages() {
     const [receiver, setReceiver] = useState({});
     const [messages, setMessages] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    const [messagesClient, setMessagesClient] = useState();
+    const [notificationsClient, setNotificationsClient] = useState();
+
+    const [notification, setNotification] = useState();
+    const [isNotificationOpen, setIsNotificationOpen] = useState();
+
     let { id } = useParams();
     const dataRef = useRef();
     const { user } = useStateContext();
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!id) {
+            iniNotificationsClient();
+        }
         if (id && (!receiver.id || receiver.id != id)) {
             getReceiver();
         }
     });
 
     const getReceiver = () => {
-        setLoading(true);
         axiosClient
             .get(`/users/${id}`)
             .then(({ data }) => {
@@ -50,12 +60,15 @@ export default function Messages() {
     };
 
     const getMessages = () => {
+        setLoading(true);
+        //console.log("LOADED MSGS");
         axiosClient
             .get(`/messages/${id}`)
             .then(({ data }) => {
                 setLoading(false);
                 setMessages(data);
-                pusherClient(user.id, id, setMessages);
+                iniNotificationsClient();
+                iniMessagesClient();
             })
             .catch((err) => {
                 throw err;
@@ -81,6 +94,41 @@ export default function Messages() {
         }
     };
 
+    const iniNotificationsClient = () => {
+        if (notificationsClient != null) {
+            notificationsClient.disconnect();
+            //console.log("UNSUBSCRIBED FROM NOTIFICATIONS");
+        }
+        //console.log("SUBSCRIBING TO NOTIFICATIONS");
+        setNotificationsClient(
+            pusherClient(user.id, id, showNotification, true)
+        );
+    };
+
+    const iniMessagesClient = () => {
+        if (messagesClient != null) {
+            messagesClient.disconnect();
+            //console.log("UNSUBSCRIBED FROM MESSAGES");
+        }
+        //console.log("SUBSCRIBING TO MESSAGES");
+        setMessagesClient(pusherClient(user.id, id, setMessages, false));
+    };
+
+    const showNotification = (notificationData) => {
+        if (
+            notificationData.message.sender_id != id &&
+            (!notification ||
+                notificationData.message.id != notification.message.id)
+        ) {
+            setNotification(notificationData);
+            setIsNotificationOpen(true);
+        }
+    };
+
+    const hideNotification = () => {
+        setIsNotificationOpen(false);
+    };
+
     function stringAvatar(name) {
         return {
             sx: {
@@ -94,11 +142,23 @@ export default function Messages() {
     }
 
     const formatDateTime = (timestamp) => {
-        return new Date(timestamp*1000).toLocaleString();
+        return new Date(timestamp * 1000).toLocaleString();
     };
 
     return (
         <div>
+            <Snackbar
+                open={isNotificationOpen}
+                onClose={hideNotification}
+                autoHideDuration={4000}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                ContentProps={{
+                    sx: {
+                        background: `${colors.blue[500]}`,
+                    },
+                }}
+                message={notification ? notification.message.sender_name + ': ' + notification.message.data : ""}
+            />
             {!id && (
                 <Typography textAlign={"center"}>
                     Select a user to chat now!

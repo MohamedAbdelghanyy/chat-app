@@ -40,6 +40,12 @@ class MessageController extends Controller
         $current_timestamp = Carbon::now()->timestamp;
         $query = array('sender_id' => $sender_id, "receiver_id" => $receiver_id, "data" => $data, 'created_at' => $current_timestamp);
         $result = DB::table('messages')->insertGetId($query);
+
+        $sender_data = DB::table('users')
+            ->select('name')
+            ->where('id', $sender_id)
+            ->get();
+
         $newMessageData = [
             'id'=> $result,
             'sender_id'=> $sender_id,
@@ -47,7 +53,18 @@ class MessageController extends Controller
             'data'=> $data,
             'created_at'=> $current_timestamp,
         ];
+
+        $newNotificationData = [
+            'id'=> $result,
+            'sender_id'=> $sender_id,
+            'sender_name'=> $sender_data[0]->name,
+            'receiver_id'=> $receiver_id,
+            'data'=> $data,
+            'created_at'=> $current_timestamp,
+        ];
+
         event(new PusherController($newMessageData, $receiver_id, $sender_id));
+        event(new PusherController($newNotificationData, $receiver_id, 0));
         return response($newMessageData, 200);
     }
 
