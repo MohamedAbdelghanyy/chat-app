@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UsersController;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
+/*
 Route::middleware('auth:sanctum')->group(function (){
     Route::get('/user', function (Request $request) {
         return $request->user();
@@ -33,3 +34,7 @@ Route::middleware('auth:sanctum')->group(function (){
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
+*/
+
+
+Route::get('/create-tenant/{name}', [TenantController::class, 'createTenant']);

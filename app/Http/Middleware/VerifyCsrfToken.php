@@ -11,7 +11,9 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array<int, string>
      */
+
+    // Disabled verification on the api because of activating multi-tenancy
     protected $except = [
-        //
+        '/api/*'
     ];
 }
