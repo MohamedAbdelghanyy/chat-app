@@ -141,8 +141,8 @@ export default function Messages() {
         };
     }
 
-    const formatDateTime = (timestamp) => {
-        return new Date(timestamp * 1000).toLocaleString();
+    const formatDateTime = (dateTime) => {
+        return new Date(dateTime).toLocaleString();
     };
 
     return (

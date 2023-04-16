@@ -37,7 +37,7 @@ class MessageController extends Controller
         $sender_id = Auth::id();
         $receiver_id = $request->input('receiver_id');
         $data = $request->input('data');
-        $current_timestamp = Carbon::now()->timestamp;
+        $current_timestamp = Carbon::now()->toDateTimeString();
         $query = array('sender_id' => $sender_id, "receiver_id" => $receiver_id, "data" => $data, 'created_at' => $current_timestamp);
         $result = DB::table('messages')->insertGetId($query);
 
