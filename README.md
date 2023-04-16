@@ -27,8 +27,9 @@
 2. Copy the `PUSHER_APP_ID`, `PUSHER_APP_KEY` and `PUSHER_APP_SECRET`.
 3. Open the `.env` file located inside `chat-app` directory.
 4. Paste the `PUSHER_APP_ID`, `PUSHER_APP_KEY` and `PUSHER_APP_SECRET` values to their variables.
-5. Open the `.env` file located inside `chat-app/react` directory.
-6. Add this variable and assign your PUSHER_APP_KEY to it `VITE_PUSHER_APP_KEY`: `EXAMPLEKEY`.
+5. Set the `BROADCAST_DRIVER` to `pusher`.
+6. Open the `.env` file located inside `chat-app/react` directory.
+7. Add this variable and assign your PUSHER_APP_KEY to it `VITE_PUSHER_APP_KEY`: `EXAMPLEKEY`.
 
 ### Multi-Tenancy Configuration
 1. Open the `config/tenancy.php` file.
@@ -58,6 +59,6 @@
 
 ## Notes
 1. The project is developed using [ReactJS](https://react.dev) and [Laravel](https://laravel.com).
-1. The UI is implemented using [MaterialUI](https://mui.com) Library.
-2. The WebSockets is implemented using [Pusher](https://pusher.com) Services.
-2. The Tenancy is implemented using [stancl/tenancy](https://tenancyforlaravel.com) Package.
+2. The UI is implemented using [MaterialUI](https://mui.com) Library.
+3. The WebSockets is implemented using [Pusher](https://pusher.com) Services.
+4. The Tenancy is implemented using [stancl/tenancy](https://tenancyforlaravel.com) Package.
